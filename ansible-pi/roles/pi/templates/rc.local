@@ -13,8 +13,8 @@
 
 # Print the IP address
 echo "test" > {{log_dir}}/test.log
-python -c "print 'test'" > {{log_dir}}/test_python.log
-python {{src_dir}}/pi_utilities/test.py
+python -c "print('test'" > {{log_dir}}/test_python.log
+)python {{src_dir}}/pi_utilities/test.py
 export PYTHONPATH={{src_dir}}:$PYTHONPATH
 printenv > {{log_dir}}/env.log
 
