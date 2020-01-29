@@ -22,7 +22,7 @@ def open(update, context):
         press_button()
         telegram_log('++ successfully opened the door')
     except e:
-        telegram_log('++ failed to open the door: '.format(e.message))
+        telegram_log('++ failed to open the door: '.format(str(e)))
         context.bot.send_message(chat_id=update.effective_chat.id, text="++ oops, something went wrong")
 
 
