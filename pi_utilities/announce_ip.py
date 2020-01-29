@@ -2,7 +2,7 @@ import socket
 import time
 import subprocess
 
-from pi_utilities.slack_helper import slack_notify_message
+from pi_utilities.telegram_helper import telegram_log
 
 
 LOG_DETAILED_INFO = True
@@ -41,7 +41,7 @@ def announce_ip():
             print routes
             print '++ endroutes'
             if ip_address:
-                slack_notify_message('@channel: its oasis: {} | {}'.format(str(ip_address), str(current_connection)))
+                telegram_log('@channel: its sar2d2: {} | {}'.format(str(ip_address), str(current_connection)))
                 break
         except Exception as e:
             print ':/ error: {}'.format(str(e.message))
