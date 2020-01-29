@@ -38,7 +38,7 @@ def announce_ip():
             print('++ found current_connection: {}'.format(str(current_connection)))
             routes = subprocess.check_output('route -n', shell=True)
             print('++ routes')
-            print routes
+            print(routes)
             print('++ endroutes')
             if ip_address:
                 slack_notify_message('@channel: its oasis: {} | {}'.format(str(ip_address), str(current_connection)))
