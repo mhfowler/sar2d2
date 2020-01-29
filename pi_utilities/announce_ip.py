@@ -44,7 +44,7 @@ def announce_ip():
                 slack_notify_message('@channel: its oasis: {} | {}'.format(str(ip_address), str(current_connection)))
                 break
         except Exception as e:
-            print(':/ error: {}'.format(str(e.message)))
+            print(':/ error: {}'.format(str(e)))
             pass
         index += 1
         time.sleep(1)
