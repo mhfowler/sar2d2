@@ -20,6 +20,5 @@ def telegram_log(msg):
 	chat_id='643117986'
 	send_telegram(msg=msg, chat_id=chat_id)
 
-
 if __name__ == '__main__':
     send_telegram('++ hi this is test message', chat_id='643117986')
