@@ -1,0 +1,5 @@
+# the static ip address that the pi ethernet address is fixed to
+ip=169.254.0.2
+# 192.168.2.2
+# 192.168.2.5 (mfg pi)
+# sometimes this works for model 2? 192.168.2.3
