@@ -57,7 +57,7 @@ def announce_ip():
             iwget = subprocess.check_output('iwgetid', shell=True)
             print('iwget: {} | {}'.format(iwget, get_ip()))
         except Exception as e:
-            print('warning: failed to log detailed info: {}'.format(e.message))
+            print('warning: failed to log detailed info: {}'.format(str(e)))
 
 
 if __name__ == '__main__':
