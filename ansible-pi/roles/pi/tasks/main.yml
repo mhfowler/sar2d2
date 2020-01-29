@@ -47,6 +47,7 @@
 
 - name: 'Copy rc.local'
   action: template src=templates/rc.local dest=/etc/rc.local
+  tags: debug
 
 - name: 'Copy etc/network/intefaces'
   action: template src=templates/interfaces dest=/etc/network/interfaces
