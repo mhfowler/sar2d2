@@ -50,10 +50,11 @@
   action: template src=templates/motd dest=/etc/motd
 
 - name: 'install node'
-  action: apt pkg=$item state=present
-  with_items:
+  apt:
+    pkg:
     - node
     - npm
+  tags: debug
 
 # https://www.npmjs.com/package/ngrok
 - name: Install packages based on package.json.
@@ -62,8 +63,8 @@
 
 # install ytalk
 - name: 'install ytalk'
-  action: apt pkg=$item state=present
-  with_items:
+  apt:
+    pkg:
     - ytalk
 
   # copy over /etc/profile
