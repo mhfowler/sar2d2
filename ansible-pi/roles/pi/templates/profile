@@ -33,31 +33,5 @@ if [ -d /etc/profile.d ]; then
   unset i
 fi
 
-
-function mycd() {
-  A=$1
-  cd "$A"
-  /srv/oasis/pi_utilities/gallery/readme.sh
-  /srv/oasis/pi_utilities/gallery/runme.sh
-}
-
-function wherefun() {
-        WHERE=${PWD/\/home\/swim/\~}
-        echo "You are currently in "$WHERE
-}
-
-TEMPLATES=/srv/oasis/ansible-pi/roles/pi/templates/
 # aliases
-alias cd="mycd"
-alias guide="cat $TEMPLATES/guide.txt"
-alias map="tree /greetingroom -d";
-alias commands="cat $TEMPLATES/commands.txt"
-alias see="cat"
-alias back="cd .."
-alias move="mycd"
-alias look="ls"
-alias where="wherefun"
-alias intro="cd ~; cat /etc/motd; echo ""; cat $TEMPLATES/guide_prompt.txt"
 
-# print out prompt to type guide
-cat $TEMPLATES/guide_prompt.txt
