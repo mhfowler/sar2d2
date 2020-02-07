@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
+
 def press_button():
   servoPIN = 17
   GPIO.setmode(GPIO.BCM)
