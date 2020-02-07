@@ -16,7 +16,7 @@ def discover_pi():
         #     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         #     ssh.connect(ip_address, username=SECRETS_DICT['PI_USERNAME'], password=SECRETS_DICT['PI_PASSWORD'])
         #     print('++ found pi: {}'.format(ip_address)
-        )# except Exception as e:
+        #)# except Exception as e:
         #     print str(e.message)
         #     continue
 
