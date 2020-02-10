@@ -15,7 +15,7 @@ if __name__ == '__main__':
   ngrok.set_auth_token(ngrok_token)
   public_url = ngrok.connect(port=22, proto="tcp")
 
-  regex = '/tcp:\/\/(\d+\.tcp\.ngrok\.io)\:(\d+?)$/'
+  regex = '^tcp:\/\/(\d+\.tcp\.ngrok\.io)\:(\d+?)$'
   match = re.match(regex, public_url)
   if match:
     ssh_string = 'ssh pi@{} -p{}'.format(match.group(1), match.group(2))
