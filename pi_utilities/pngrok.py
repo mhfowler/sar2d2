@@ -1,10 +1,12 @@
-from pyngrok import ngrok
 import time
-from pi_utilities.telegram_helper import telegram_log
-
 import re
 
+from pyngrok import ngrok
+
+from pi_utilities.telegram_helper import telegram_log
 from hello_settings import SECRETS_DICT
+
+
 ngrok_token = SECRETS_DICT['NGROK_TOKEN']
 
 
@@ -14,7 +16,7 @@ if __name__ == '__main__':
   public_url = ngrok.connect(port=22, proto="tcp")
 
   regex = '/tcp:\/\/(\d+\.tcp\.ngrok\.io)\:(\d+?)$/'
-  match = regex.match(public_url)
+  match = re.match(regex, public_url)
   if match:
     ssh_string = 'ssh pi@{} -p{}'.format(match.group(1), match.group(2))
     telegram_log('ngrok is now connected: {}'.format(ssh_string))
