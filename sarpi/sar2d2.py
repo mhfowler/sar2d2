@@ -7,8 +7,11 @@ from sarpi.servo_helper import press_button
 from hello_settings import SECRETS_DICT
 
 
-def echo(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text=update.message.text)
+def handle_message(update, context):
+    if update.message.text == 'open':
+        open(update, context)
+    else:
+        context.bot.send_message(chat_id=update.effective_chat.id, text=update.message.text)
 
 
 def start(update, context):
@@ -41,8 +44,8 @@ def initiate_listener():
     open_handler = CommandHandler('open', open)
     dispatcher.add_handler(open_handler)
 
-    echo_handler = MessageHandler(Filters.text, echo)
-    dispatcher.add_handler(echo_handler)
+    message_handler = MessageHandler(Filters.text, handle_message)
+    dispatcher.add_handler(message_handler)
 
     # start polling
     telegram_log('++ starting telegram bot poller')
