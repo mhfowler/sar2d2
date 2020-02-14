@@ -36,7 +36,7 @@ def open(update, context):
 def reboot(update, context):
     telegram_log('++ someone is rebooting sar2d2: {}'.format(update.effective_chat.id))
     context.bot.send_message(chat_id=update.effective_chat.id, text="++ no problem dear, rebooting now... will take about a minute")
-    os.system('sudo reboot')
+    os.system('/usr/bin/sudo /sbin/reboot')
 
 
 def initiate_listener():
