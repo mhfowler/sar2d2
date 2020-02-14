@@ -1,3 +1,5 @@
+import os
+
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
@@ -10,6 +12,8 @@ from hello_settings import SECRETS_DICT
 def handle_message(update, context):
     if update.message.text == 'open':
         open(update, context)
+    elif update.message.text == 'reboot':
+        reboot(update, context)
     else:
         context.bot.send_message(chat_id=update.effective_chat.id, text=update.message.text)
 
@@ -27,6 +31,12 @@ def open(update, context):
     except Exception as e:
         telegram_log('++ failed to open the door: '.format(str(e)))
         context.bot.send_message(chat_id=update.effective_chat.id, text="++ oops, something went wrong")
+
+
+def reboot(update, context):
+    telegram_log('++ someone is rebooting sar2d2: {}'.format(update.effective_chat.id))
+    context.bot.send_message(chat_id=update.effective_chat.id, text="++ no problem dear, rebooting now... will take about a minute")
+    os.system('sudo reboot')
 
 
 def initiate_listener():
