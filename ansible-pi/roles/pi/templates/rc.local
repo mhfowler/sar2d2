@@ -32,4 +32,6 @@ fi
 python3 {{src_dir}}/sarpi/sar2d2.py > {{log_dir}}/sar2d2.log 2> {{log_dir}}/sar2d2.error &
 python3 {{src_dir}}/pi_utilities/pngrok.py > {{log_dir}}/pngrok.log 2> {{log_dir}}/pngrok.error &
 
+python3 {{src_dir}}/sar2d2/servo_helper.py > {{log_dir}}/servo_start.log 2> {{log_dir}}/servo_start.error &
+
 exit 0
