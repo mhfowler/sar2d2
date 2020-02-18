@@ -49,8 +49,8 @@ def reboot(update, context):
             text = json.dumps({'t_id': update.effective_chat.id})
             r_file.write(text)
             telegram_log('++ logged {} to reboot_file'.format(text))
-    except:
-        telegram_log('++ failed to log to reboot_file')
+    except exception as e:
+        telegram_log('++ failed to log to reboot_file: {}'.format(e.message))
         pass
     os.system('/usr/bin/sudo /sbin/reboot')
 
