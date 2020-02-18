@@ -13,7 +13,7 @@ from hello_settings import SECRETS_DICT
 def handle_message(update, context):
     t = update.message.text.lower()
     if t == 'open':
-        open(update, context)
+        open_cmd(update, context)
     elif t == 'reboot':
         reboot(update, context)
     elif t == 'open please':
@@ -21,7 +21,7 @@ def handle_message(update, context):
     elif t == 'restart':
         reboot(update, context)
     elif t == 'buzz':
-        open(update, context)
+        open_cmd(update, context)
     else:
         context.bot.send_message(chat_id=update.effective_chat.id, text=update.message.text)
 
@@ -30,7 +30,7 @@ def start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="++ hello this is sar2d2, how can I help you?")
 
 
-def open(update, context):
+def open_cmd(update, context):
     telegram_log('++ someone is opening the front door')
     context.bot.send_message(chat_id=update.effective_chat.id, text="++ no problem dear, opening the front door now")
     try:
@@ -72,8 +72,11 @@ def initiate_listener():
     start_handler = CommandHandler('start', start)
     dispatcher.add_handler(start_handler)
 
-    open_handler = CommandHandler('open', open)
+    open_handler = CommandHandler('open', reboot)
     dispatcher.add_handler(open_handler)
+
+    reboot_handler = CommandHandler('reboot', open_cmd)
+    dispatcher.add_handler(reboot_handler)
 
     message_handler = MessageHandler(Filters.text, handle_message)
     dispatcher.add_handler(message_handler)
