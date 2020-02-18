@@ -40,15 +40,19 @@ def open(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text="++ oops, something went wrong")
 
 
+def write_reboot_id(t_id):
+    reboot_log_file = SECRETS_DICT['REBOOT_LOG_FILE']
+    with open(reboot_log_file, 'w') as r_file:
+        text = json.dumps({'t_id': t_id})
+        r_file.write(text)
+        telegram_log('++ logged {} to reboot_file'.format(text))
+
+
 def reboot(update, context):
     telegram_log('++ someone is rebooting sar2d2: {}'.format(update.effective_chat.id))
     context.bot.send_message(chat_id=update.effective_chat.id, text="++ no problem dear, rebooting now... will take about a minute")
     try:
-        reboot_log_file = SECRETS_DICT['REBOOT_LOG_FILE']
-        with open(reboot_log_file, 'w') as r_file:
-            text = json.dumps({'t_id': update.effective_chat.id})
-            r_file.write(text)
-            telegram_log('++ logged {} to reboot_file'.format(text))
+        write_reboot_id(update.effective_chat.id)
     except exception as e:
         telegram_log('++ failed to log to reboot_file: {}'.format(e.message))
         pass
