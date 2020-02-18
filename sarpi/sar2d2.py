@@ -13,7 +13,7 @@ from hello_settings import SECRETS_DICT
 def handle_message(update, context):
     t = update.message.text.lower()
     if t == 'open':
-        open_cmd(update, context)
+        reboot(update, context)
     elif t == 'reboot':
         reboot(update, context)
     elif t == 'open please':
@@ -51,7 +51,7 @@ def write_reboot_id(t_id):
 
 def reboot(update, context):
     telegram_log('++ someone is rebooting sar2d2: {}'.format(update.effective_chat.id))
-    context.bot.send_message(chat_id=update.effective_chat.id, text="++ no problem dear, rebooting now... will take about a minute")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="++ no problem dear, one sec... will take about a minute")
     try:
         write_reboot_id(update.effective_chat.id)
     except exception as e:
