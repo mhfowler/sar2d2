@@ -10,10 +10,17 @@ from hello_settings import SECRETS_DICT
 
 
 def handle_message(update, context):
-    if update.message.text == 'open':
+    t = update.message.text.lower()
+    if t == 'open':
         open(update, context)
-    elif update.message.text == 'reboot':
+    elif t == 'reboot':
         reboot(update, context)
+    elif t == 'open please':
+        reboot(update, context)
+    elif t == 'restart':
+        reboot(update, context)
+    elif t == 'buzz':
+        open(update, context)
     else:
         context.bot.send_message(chat_id=update.effective_chat.id, text=update.message.text)
 
@@ -36,6 +43,15 @@ def open(update, context):
 def reboot(update, context):
     telegram_log('++ someone is rebooting sar2d2: {}'.format(update.effective_chat.id))
     context.bot.send_message(chat_id=update.effective_chat.id, text="++ no problem dear, rebooting now... will take about a minute")
+    try:
+        reboot_log_file = SECRETS_DICT['REBOOT_LOG_FILE']
+        with open(reboot_log_file, 'w') as r_file:
+            text = json.dumps({'t_id': update.effective_chat.id})
+            r_file.write(text)
+            telegram_log('++ logged {} to reboot_file'.format(text))
+    except:
+        telegram_log('++ failed to log to reboot_file')
+        pass
     os.system('/usr/bin/sudo /sbin/reboot')
 
 
