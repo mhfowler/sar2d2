@@ -28,6 +28,7 @@ def press_button():
 
 
 if __name__ == '__main__':
+  time.sleep(2)
   try:
     r_file_path = SECRETS_DICT['REBOOT_LOG_FILE']
     if os.path.isfile(r_file_path):
@@ -40,5 +41,4 @@ if __name__ == '__main__':
         os.remove(r_file_path)
   except:
     pass
-  time.sleep(5)
   press_button()
