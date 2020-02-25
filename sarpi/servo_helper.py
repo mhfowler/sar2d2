@@ -17,7 +17,7 @@ def press_button():
 
     p.start(2.5)  # Initialization
     try:
-      p.ChangeDutyCycle(6.7)
+      p.ChangeDutyCycle(8.1)
       time.sleep(1.5)
       p.ChangeDutyCycle(2.5)
       time.sleep(0.5)
