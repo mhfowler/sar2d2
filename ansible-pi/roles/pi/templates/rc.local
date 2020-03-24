@@ -11,27 +11,34 @@
 #
 # By default this script does nothing.
 
+
+PYTHON=/home/pi/.pyenv/shims/python3.8
+export PYTHONPATH=/home/pi/.pyenv/versions/3.8.2/lib/python3.8/site-packages:$PYTHONPATH
+
 # Print the IP address
-echo "test" > {{log_dir}}/test.log
-python3 -c "print('test')" > {{log_dir}}/test_python.log
-python3 {{src_dir}}/pi_utilities/test.py
-export PYTHONPATH={{src_dir}}:$PYTHONPATH
-printenv > {{log_dir}}/env.log
+echo "test" > /srv/log/test.log
+$PYTHON -c "print('test')" > /srv/log/test_python.log
+$PYTHON /srv/oasis/pi_utilities/test.py
+export PYTHONPATH=/srv/oasis:$PYTHONPATH
+printenv > /srv/log/env.log
 
 # try to connect to the internet and announce ip address
-python3 {{src_dir}}/pi_utilities/announce_ip.py > {{log_dir}}/announce.log 2> {{log_dir}}/announce.error
+$PYTHON /srv/oasis/pi_utilities/announce_ip.py > /srv/log/announce.log 2> /srv/log/announce.error
 # Print the IP address
 _IP=$(hostname -I) || true
 if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
-  echo "$_IP" > {{log_dir}}/ip.log
+  echo "$_IP" > /srv/log/ip.log
 fi
 
 # at this point we are connected to the internet, let's start sar2d2
-# node {{src_dir}}/js/ngrok_tcp_connect.js  > {{log_dir}}/ngrok.log 2> {{log_dir}}/ngrok.error &
-python3 {{src_dir}}/sarpi/sar2d2.py > {{log_dir}}/sar2d2.log 2> {{log_dir}}/sar2d2.error &
-python3 {{src_dir}}/pi_utilities/pngrok.py > {{log_dir}}/pngrok.log 2> {{log_dir}}/pngrok.error &
+# node /srv/oasis/js/ngrok_tcp_connect.js  > /srv/log/ngrok.log 2> /srv/log/ngrok.error &
+$PYTHON /srv/oasis/sarpi/sar2d2.py > /srv/log/sar2d2.log 2> /srv/log/sar2d2.error &
+$PYTHON /srv/oasis/pi_utilities/pngrok.py > /srv/log/pngrok.log 2> /srv/log/pngrok.error &
 
-python3 {{src_dir}}/sarpi/servo_helper.py > {{log_dir}}/servo_start.log 2> {{log_dir}}/servo_start.error &
+#python3 /srv/oasis/sarpi/servo_helper.py > /srv/log/servo_start.log 2> /srv/log/servo_start.error &
+
+# ssb
+runuser -l pi -c '/srv/run-ssb-server.sh > /srv/log/ssb.log 2> /srv/log/ssb.error &'
 
 exit 0
