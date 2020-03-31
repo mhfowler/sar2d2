@@ -9,6 +9,11 @@ from hello_settings import SECRETS_DICT
 
 ngrok_token = SECRETS_DICT['NGROK_TOKEN']
 
+def log_ip(ssh_str):
+  telegram_log('ngrok is now connected: {}'.format(ssh_str))
+  with open("/srv/www/ssh.txt", "w") as ip_file:
+    ip_file.write(ssh_str)
+
 
 if __name__ == '__main__':
   # Open a tunnel on the default port 80
@@ -19,10 +24,9 @@ if __name__ == '__main__':
   match = re.match(regex, public_url)
   if match:
     ssh_string = 'ssh pi@{} -p{}'.format(match.group(1), match.group(2))
-    telegram_log('ngrok is now connected: {}'.format(ssh_string))
+    log_ip(ssh_str)
   else:
-    telegram_log('ngrok is now connected: {}'.format(public_url))
-
+    log_ip(public_url)
 
   while True:
     time.sleep(1)

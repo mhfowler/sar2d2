@@ -7,7 +7,7 @@ no_inet_action() {
     shutdown -r +1 'No internet.'
 }
 
-if ping -c5 google.com; then
+if ping -c3 google.com; then
     echo 1 > $TMP_FILE
 else
     [[ `cat $TMP_FILE` == 0 ]] && no_inet_action || echo 0 > $TMP_FILE
