@@ -24,7 +24,7 @@ if __name__ == '__main__':
   match = re.match(regex, public_url)
   if match:
     ssh_string = 'ssh pi@{} -p{}'.format(match.group(1), match.group(2))
-    log_ip(ssh_str)
+    log_ip(ssh_string)
   else:
     log_ip(public_url)
 
