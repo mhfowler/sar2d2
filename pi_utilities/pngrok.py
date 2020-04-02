@@ -12,13 +12,13 @@ ngrok_token = SECRETS_DICT['NGROK_TOKEN']
 def log_ip(ssh_str):
   try:
     telegram_log('ngrok is now connected: {}'.format(ssh_str))
-  except:
-    pass
+  except Exception as e:
+    print('error logging ssh_str to telegram: {}'.format(e))
   try:
     with open("/srv/www/ssh.txt", "w") as ip_file:
       ip_file.write(ssh_str)
-  except:
-    pass
+  except Exception as e:
+    print('error logging ssh_str to file: {}'.format(e))
 
 
 if __name__ == '__main__':

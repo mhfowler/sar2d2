@@ -13,11 +13,11 @@ from hello_settings import SECRETS_DICT
 def handle_message(update, context):
     t = update.message.text.lower()
     if t == 'open':
-        reboot(update, context)
+        open_cmd(update, context)
     elif t == 'reboot':
         reboot(update, context)
     elif t == 'open please':
-        reboot(update, context)
+        open_cmd(update, context)
     elif t == 'restart':
         reboot(update, context)
     elif t == 'buzz':
@@ -32,10 +32,10 @@ def start(update, context):
 
 def open_cmd(update, context):
     telegram_log('++ someone is opening the front door')
-    context.bot.send_message(chat_id=update.effective_chat.id, text="++ no problem dear, opening the front door now")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="++ no problem dear, will try to open the front door now")
     try:
         press_button()
-        telegram_log('++ successfully opened the door')
+        telegram_log("++ just tried to open the door, if it didn't work, wait a few seconds and try again, or you can try sending the message reboot and then try again")
     except Exception as e:
         telegram_log('++ failed to open the door: '.format(str(e)))
         context.bot.send_message(chat_id=update.effective_chat.id, text="++ oops, something went wrong")

@@ -8,7 +8,7 @@ from pi_utilities.telegram_helper import telegram_log, send_telegram
 
 
 def press_button():
-  for i in range(0, 1):
+  for i in range(0, 3):
     servoPIN = 17
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(servoPIN, GPIO.OUT)
@@ -24,7 +24,7 @@ def press_button():
     finally:
       p.stop()
       GPIO.cleanup()
-      time.sleep(0.5)
+      time.sleep(1.0)
 
 
 if __name__ == '__main__':
