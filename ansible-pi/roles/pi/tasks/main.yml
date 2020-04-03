@@ -86,9 +86,15 @@
   action: template src=templates/.bash_profile dest={{bash_profile}}
   tags: code
 
-# copy over cron jobs
-- name: 'Copy cron jobs'
-  action: template src=templates/cron dest={{cron_dir}}
+- name: 'Ensure cron directory'
+  action: file dest={{cron_dir}} state=directory mode=770
+
+- name: Copy over cron jobs
+  template:
+    src: '{{ item.src }}'
+    dest: '{{ cron_dir }}/{{ item.path }}'
+  with_filetree: 'templates/cron'
+  when: item.state == 'file'
   tags: code
 
 - name: for dynamic dns cronjob
