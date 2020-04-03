@@ -81,13 +81,36 @@
   action: template src=templates/profile dest=/etc/profile
   tags: code
 
-#- name: for removing add new users cronjob
-#  cron: name="add new users" state=absent
-#  tags: code
+# copy over /home/pi/.bash_profile
+- name: 'Copy .bash_profile'
+  action: template src=templates/.bash_profile dest={{bash_profile}}
+  tags: code
+
+# copy over cron jobs
+- name: 'Copy cron jobs'
+  action: template src=templates/cron dest={{cron_dir}}
+  tags: code
+
+- name: for dynamic dns cronjob
+  cron:
+    name: "dynamic dns"
+    minute: "*"
+    hour: "*"
+    job: "{{cron_dir}}/dynamicdns.sh"
+  tags: code
+
+- name: 'make /srv owned by admin'
+  file: path=/srv state=directory owner=root group=admin recurse=yes
+  tags: code
 
 - name: 'make bash scripts executable'
-  file: path={{src_dir}}/bash state=directory mode=0770 owner=root group=root recurse=yes
+  file: path={{src_dir}}/bash state=directory mode=0770 owner=root group=admin recurse=yes
   tags: code
+
+- name: 'make cron jobs executable'
+  file: path={{cron_dir}} state=directory mode=0770 owner=root group=admin recurse=yes
+  tags: code
+
 
 #- name: 'Reboot'
 #  command: /sbin/reboot

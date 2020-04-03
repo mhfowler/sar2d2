@@ -12,7 +12,7 @@ def update_dns():
     telegram_log('++ updating dns for {}'.format(ZONE_ID))
 
     script_path = os.path.join(PROJECT_PATH, 'bash/update_dns.sh')
-    bash_cmd = 'ACCOUNT_ID=${ACCOUNT_ID} TOKEN=${TOKEN} RECORD_ID=${RECORD_ID} ZONE_ID=${ZONE_ID} ${script_path}'.format(
+    bash_cmd = 'ACCOUNT_ID={ACCOUNT_ID} TOKEN={TOKEN} RECORD_ID={RECORD_ID} ZONE_ID={ZONE_ID} {script_path}'.format(
         ACCOUNT_ID=ACCOUNT_ID,
         TOKEN=TOKEN,
         RECORD_ID=RECORD_ID,

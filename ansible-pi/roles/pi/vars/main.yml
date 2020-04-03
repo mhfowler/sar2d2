@@ -5,3 +5,5 @@ repo_branch: master
 src_dir: /srv/oasis
 log_dir: /srv/log
 data_dir: /srv/data
+cron_dir: /srv/cron
+bash_profile: /home/pi/.bash_profile
