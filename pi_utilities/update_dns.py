@@ -13,7 +13,7 @@ def update_dns():
     for record in RECORDS:
         RECORD_ID = record['RECORD_ID']
         ZONE_ID = record['ZONE_ID']
-        telegram_log('++ updating dns for {} {}'.format(ZONE_ID, RECORD_ID))
+        print('++ updating dns for {} {}'.format(ZONE_ID, RECORD_ID))
         bash_cmd = 'ACCOUNT_ID={ACCOUNT_ID} TOKEN={TOKEN} RECORD_ID={RECORD_ID} ZONE_ID={ZONE_ID} {script_path}'.format(
             ACCOUNT_ID=ACCOUNT_ID,
             TOKEN=TOKEN,
