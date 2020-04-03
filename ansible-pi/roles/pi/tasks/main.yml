@@ -28,13 +28,8 @@
   tags: code
 
 - name: copy files from reddeadnettle to /srv/www on remote host
-  synchronize:
-    src: {{src_dir}}/reddeadnettle
-    dest: /srv/www
-  delegate_to: "{{ inventory_hostname }}"
-
-- name: 'Ensure secret_files directory'
-  action: file dest={{src_dir}}/ansible-pi/secret_files state=directory
+  command: cp -r {{src_dir}}/reddeadnettle/. /srv/www
+  tags: code
 
 - name: 'Build python dependencies'
   apt:
