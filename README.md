@@ -17,3 +17,10 @@
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ### http://oasisvr.info# sar2d2
+
+
+
+# x11
+
+ssh -Y pi@myfreehoroscope.today
+(then use midori or lxsession)

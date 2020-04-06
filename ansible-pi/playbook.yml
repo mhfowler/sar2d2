@@ -3,8 +3,10 @@
 - name: Ansible Playbook for configuring brand new Raspberry Pi
 
   hosts: pis
+  vars_files:
+    - vars/default.yml
   roles:
-    - pi
-    - letsencrypt
+    - {role: 'pi', tags: 'pi'}
+    - {role: 'letsencrypt', tags: 'letsencrypt'}
   remote_user: pi
   become: yes
