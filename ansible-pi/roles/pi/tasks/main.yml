@@ -46,6 +46,11 @@
   copy: src=secret_files/secret.json dest={{src_dir}}/ansible-pi/secret_files/secret.json
   tags: code
 
+- name: 'Copy luks-keyfile'
+  copy: src=secret_files/luks-keyfile dest={{src_dir}}/ansible-pi/secret_files/luks-keyfile
+  tags: code
+
+
 - name: 'Copy rc.local'
   action: template src=templates/rc.local dest=/etc/rc.local
   tags: debug
