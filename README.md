@@ -23,4 +23,8 @@
 # x11
 
 ssh -Y pi@myfreehoroscope.today
-(then use midori or lxsession)
+(then use midori or lxsession
+
+
+# encrypted hard-drive
+followed this guide for encrypting external USB hard-drive http://www.longsteve.com/wiki/index.php/USB_Hard_Drive_Encryption_on_a_Raspberry_Pi
