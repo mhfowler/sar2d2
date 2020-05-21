@@ -1,2 +1,3 @@
 python-telegram-bot==12.3.0
 pyngrok==2.0.2
+requests==2.23.0
