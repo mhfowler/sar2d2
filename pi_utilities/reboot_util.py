@@ -66,7 +66,7 @@ def load_minutes_to_next_reboot():
 def reboot_check():
     should_reboot = check_if_pi_should_reboot()
     if not should_reboot:
-        _log('++ no reboot required')
+        # _log('++ no reboot required')
         save_minutes_to_next_reboot(0)
         return
     else:
