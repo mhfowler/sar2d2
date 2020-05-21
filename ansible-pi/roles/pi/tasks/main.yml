@@ -111,6 +111,14 @@
     job: "{{cron_dir}}/dynamicdns.sh"
   tags: code
 
+- name: for reboot util
+  cron:
+    name: "reboot util"
+    minute: "*/5"
+    hour: "*"
+    job: "{{cron_dir}}/reboot_util.sh"
+  tags: code
+
 - name: 'make /srv owned by admin'
   file: path=/srv state=directory owner=root group=admin recurse=yes
   tags: code

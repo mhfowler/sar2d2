@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-ansible-playbook ansible-pi/playbook.yml -i ansible-pi/hosts --ask-pass -c paramiko --tags code
+ansible-playbook ansible-pi/playbook.yml -i ansible-pi/hosts --ask-pass -c paramiko
 #ansible-playbook ansible-pi/playbook.yml -i ansible-pi/hosts --ask-pass -c paramiko --tags letsencrypt
 #ansible -i ansible-pi/hosts pis -m ping --ask-pass -c paramiko
 #ansible-playbook ansible-pi/playbook.yml -i ansible-pi/hosts --ask-pass --sudo
