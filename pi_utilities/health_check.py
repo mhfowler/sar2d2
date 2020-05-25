@@ -46,8 +46,9 @@ def get_top_stats():
         contents = f.read()
         processes = []
         after_header = False
-        for line in contents:
-            _log(line)
+        lines = contents.split('\n')
+        for line in lines:
+            print(line)
             if 'COMMAND' in line:
                 after_header = True
                 continue
