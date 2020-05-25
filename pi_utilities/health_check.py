@@ -39,7 +39,6 @@ def get_sys_stats():
 
 
 def get_top_stats():
-    top_log = '/srv/log/top.log'
     cmd = ['top', '-b', '-n', '1']
     result = subprocess.run(cmd, capture_output=True, text=True)
     output = result.stdout
@@ -71,10 +70,10 @@ def log_sys_stats():
     try:
         write_path = '/srv/log/sysstats.log'
         # time, is_sbot_running, percent_memory_used, percent_cpu_used, node_cpu_used
-        data_to_write = '{},{},{},{}'.format(time, is_sbot_working, sys_stats['percent_memory_used'], sys_stats['percent_cpu_used'], node_cpu_used)
+        data_to_write = '{},{},{},{},{}'.format(time, is_sbot_working, sys_stats['percent_memory_used'], sys_stats['percent_cpu_used'], node_cpu_used)
         with open(write_path, 'a') as f:
             f.write(data_to_write + '\n')
-            _log('++ logged {} to sysstats.log'.format(data_to_write))
+            _log('++ logged time,is_sbot_running, mem_used,cpu_used,node_cpu_used {} to sysstats.log'.format(data_to_write))
     except:
         _log('++ could not write to sysstats.log')
 
