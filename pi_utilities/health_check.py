@@ -43,10 +43,15 @@ def get_top_stats():
     result = subprocess.run(cmd, stdout=subprocess.PIPE)
     stdout = result.stdout.decode('utf-8')
     processes = []
+    after_header = False
     for line in stdout:
-        if 'node' in line:
-            _log(line)
-            return line
+        if 'COMMAND' in line:
+            after_header = True
+            continue
+        if after_header:
+            if 'node' in line:
+                _log(line)
+                return line
 
 
 # define conditions that need to be met
