@@ -15,8 +15,8 @@ def _log(msg):
 
 def check_sbot_up():
     try:
-        cmd = ['/Users/maxfowler/.nvm/versions/node/v12.16.3/bin/ssb', 'whoami']
-        # cmd = ['/home/pi/.nvm/versions/node/v10.19.0/bin/sbot', 'whoami']
+        # cmd = ['/Users/maxfowler/.nvm/versions/node/v12.16.3/bin/ssb', 'whoami']
+        cmd = ['/home/pi/.nvm/versions/node/v10.19.0/bin/sbot', 'whoami']
         result = subprocess.run(cmd, stdout=subprocess.PIPE)
         stdout = result.stdout.decode('utf-8')
         success = (result.returncode == 0)
