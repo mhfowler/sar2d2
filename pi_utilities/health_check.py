@@ -39,19 +39,22 @@ def get_sys_stats():
 
 
 def get_top_stats():
-    cmd = ['top', '-b', '-n', '1']
-    result = subprocess.run(cmd, stdout=subprocess.PIPE)
-    stdout = result.stdout.decode('utf-8')
-    processes = []
-    after_header = False
-    for line in stdout:
-        if 'COMMAND' in line:
-            after_header = True
-            continue
-        if after_header:
-            if 'node' in line:
-                _log(line)
-                return line
+    top_log = '/srv/log/top.log'
+    cmd = ['top', '-b', '-n', '1', '>', top_log]
+    result = subprocess.run(cmd)
+    with open(top_log, 'r') as f:
+        contents = f.read()
+        processes = []
+        after_header = False
+        for line in contents:
+            _log(line)
+            if 'COMMAND' in line:
+                after_header = True
+                continue
+            if after_header:
+                if 'node' in line:
+                    _log(line)
+                    return line
 
 
 # define conditions that need to be met
@@ -59,7 +62,10 @@ def log_sys_stats():
     time = datetime.datetime.now()
     is_sbot_working = check_sbot_up()
     sys_stats = get_sys_stats()
-    top_stats = get_top_stats()
+    try:
+        top_stats = get_top_stats()
+    except:
+        _log('++ failed to get top stats')
     try:
         write_path = '/srv/log/sysstats.log'
         # time, is_sbot_running, percent_memory_used, percent_cpu_used
