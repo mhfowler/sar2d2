@@ -15,8 +15,8 @@ def _log(msg):
 
 def check_sbot_up():
     try:
-        # cmd = ['/Users/maxfowler/.nvm/versions/node/v12.16.3/bin/ssb', 'whoami']
-        cmd = ['/home/pi/.nvm/versions/node/v10.19.0/bin/sbot', 'whoami']
+        cmd = ['/Users/maxfowler/.nvm/versions/node/v12.16.3/bin/ssb', 'whoami']
+        # cmd = ['/home/pi/.nvm/versions/node/v10.19.0/bin/sbot', 'whoami']
         result = subprocess.run(cmd, stdout=subprocess.PIPE)
         stdout = result.stdout.decode('utf-8')
         success = (result.returncode == 0)
@@ -38,11 +38,23 @@ def get_sys_stats():
     }
 
 
+def get_top_stats():
+    cmd = ['top', '-b', '-n', '1']
+    result = subprocess.run(cmd, stdout=subprocess.PIPE)
+    stdout = result.stdout.decode('utf-8')
+    processes = []
+    for line in stdout:
+        if 'node' in line:
+            _log(line)
+            return line
+
+
 # define conditions that need to be met
 def log_sys_stats():
     time = datetime.datetime.now()
     is_sbot_working = check_sbot_up()
     sys_stats = get_sys_stats()
+    top_stats = get_top_stats()
     try:
         write_path = '/srv/log/sysstats.log'
         # time, is_sbot_running, percent_memory_used, percent_cpu_used
