@@ -119,6 +119,14 @@
     job: "{{cron_dir}}/reboot_util.sh"
   tags: code
 
+- name: for health check
+  cron:
+    name: "health check"
+    minute: "*"
+    hour: "*"
+    job: "{{cron_dir}}/healthcheck.sh"
+  tags: code
+
 - name: 'make /srv owned by admin'
   file: path=/srv state=directory owner=root group=admin recurse=yes
   tags: code
