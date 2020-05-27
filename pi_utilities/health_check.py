@@ -36,7 +36,7 @@ def get_ssb_size():
         stdout = result.stdout.decode('utf-8')
         size = stdout.split()[0]
         return size
-    log_size = du('/home/pi/ssb')
+    log_size = du('/home/pi/.ssb')
     blobs_size = du('/mnt/storage/ssb-blobs')
     return {
         'log_size': log_size,
