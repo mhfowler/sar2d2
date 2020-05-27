@@ -19,7 +19,6 @@ def check_sbot_up():
         cmd = ['/home/pi/.nvm/versions/node/v10.19.0/bin/sbot', 'whoami']
         result = subprocess.run(cmd, stdout=subprocess.PIPE)
         stdout = result.stdout.decode('utf-8')
-        print(stdout)
         success = (result.returncode == 0)
         data_result = json.loads(stdout)
         id = data_result['id']
@@ -27,6 +26,22 @@ def check_sbot_up():
     except Exception as e:
         print('++ sbot check error: {}'.format(e))
         return False
+
+
+def get_ssb_size():
+    """disk usage in human readable format (e.g. '2,1GB')"""
+    def du(path):
+        cmd = ['du','-sh', path]
+        result = subprocess.run(cmd, stdout=subprocess.PIPE)
+        stdout = result.stdout.decode('utf-8')
+        size = stdout.split()[0]
+        return size
+    log_size = du('/home/pi/ssb')
+    blobs_size = du('/mnt/storage/ssb-blobs')
+    return {
+        'log_size': log_size,
+        'blobs_size': blobs_size
+    }
 
 
 def get_sys_stats():
@@ -69,12 +84,26 @@ def log_sys_stats():
         node_cpu_used = '?'
         _log('++ failed to get top stats')
     try:
+        result = get_ssb_size()
+        ssb_log_size = result['log_size']
+        ssb_blobs_size = result['blobs_size']
+    except:
+        ssb_log_size = 0
+        ssb_blobs_size = 0
+    try:
         write_path = '/srv/log/sysstats.log'
-        # time, sbot_id, percent_memory_used, percent_cpu_used, node_cpu_used
-        data_to_write = '{},{},{},{},{}'.format(time, sbot_id, sys_stats['percent_memory_used'], sys_stats['percent_cpu_used'], node_cpu_used)
+        data_to_write = '{time},{sbot_id},{percent_memory_used},{percent_cpu_used},{node_cpu_used},{ssb_log_size},{ssb_blobs_size}'.format(
+            time=time,
+            sbot_id=sbot_id,
+            percent_memory_used=sys_stats['percent_memory_used'],
+            percent_cpu_used=sys_stats['percent_cpu_used'],
+            node_cpu_used=node_cpu_used,
+            ssb_log_size=ssb_log_size,
+            ssb_blobs_size=ssb_blobs_size
+        )
         with open(write_path, 'a') as f:
             f.write(data_to_write + '\n')
-            _log('++ logged time,sbot_id, mem_used,cpu_used,node_cpu_used {} to sysstats.log'.format(data_to_write))
+            _log('++ time,sbot_id, mem_used,cpu_used,node_cpu_used,ssb_log_size,ssb_blobs_size\n{}'.format(data_to_write))
     except:
         _log('++ could not write to sysstats.log')
 
