@@ -124,6 +124,7 @@
     name: "health check"
     minute: "*"
     hour: "*"
+    user: "pi"
     job: "{{cron_dir}}/healthcheck.sh"
   tags: code
 
