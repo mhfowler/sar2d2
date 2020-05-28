@@ -40,6 +40,5 @@ $PYTHON /srv/oasis/pi_utilities/pngrok.py > /srv/log/pngrok.log 2> /srv/log/pngr
 
 # ssb
 # runuser -l pi -c '/srv/run-ssb-server.sh > /srv/log/ssb.log 2> /srv/log/ssb.error &'
-systemctl start oasis.service
 
 exit 0
