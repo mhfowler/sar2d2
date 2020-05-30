@@ -123,7 +123,7 @@
   cron:
     name: "health check"
     minute: "*"
-    hour: "*/2"
+    hour: "*/10"
     user: "pi"
     job: "{{cron_dir}}/healthcheck.sh"
   tags: code
