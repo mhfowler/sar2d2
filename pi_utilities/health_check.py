@@ -69,7 +69,6 @@ def get_top_stats():
             if 'node' in line:
                 values = line.split()
                 p = values[8]
-                _log('cpu: {}'.format(p))
                 return p
 
 
