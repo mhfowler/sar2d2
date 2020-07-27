@@ -1,0 +1,11 @@
+server {
+    listen 80;
+    server_name oasisvr.info;
+
+    location / {
+        root /srv/www;
+        index index.html;
+
+        try_files $uri $uri/ /index.html;
+    }
+}

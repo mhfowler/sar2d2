@@ -31,6 +31,25 @@
   command: cp -r {{src_dir}}/reddeadnettle/. /srv/www
   tags: code
 
+- name: copy files from oasisvr.info to /srv/www on remote host
+  command: cp -r {{src_dir}}/oasisvr.info/. /srv/www
+  tags: code
+
+- name: Install nginx site for specified site
+  template:
+    src: templates/localhost
+    dest: /etc/nginx/sites-enabled/localhost
+
+- name: Install nginx site for specified site
+  template:
+    src: templates/reddeadnettle.network
+    dest: /etc/nginx/sites-enabled/reddeadnettle.network
+
+- name: Install nginx site for specified site
+  template:
+    src: templates/myfreehoroscope.today
+    dest: /etc/nginx/sites-enabled/myfreehoroscope.today
+
 - name: 'Build python dependencies'
   apt:
     pkg:
