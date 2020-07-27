@@ -44,6 +44,14 @@
   template:
     src: templates/reddeadnettle.network
     dest: /etc/nginx/sites-enabled/reddeadnettle.network
+  tags: code
+
+- name: Install nginx site for specified site
+  template:
+    src: templates/localhost
+    dest: /etc/nginx/sites-enabled/localhost
+  tags: code
+
 
 - name: Install nginx site for specified site
   template:
@@ -151,12 +159,32 @@
   file: path=/srv state=directory owner=root group=admin recurse=yes
   tags: code
 
+- name: 'set permissions for /srv'
+  file:
+    path: /srv
+    state: directory
+    mode: u=rwX,g=rX,o=
+    owner: root
+    group: admin
+    recurse: yes
+  tags: code
+
+- name: 'set permissions for /greetingroom'
+  file:
+    path: /home/swim/greetingroom
+    state: directory
+    mode: u=rwX,g=rX,o=
+    owner: swim
+    group: swim
+    recurse: yes
+  tags: code
+
 - name: 'make bash scripts executable'
-  file: path={{src_dir}}/bash state=directory mode=0770 owner=root group=admin recurse=yes
+  file: path={{src_dir}}/bash state=directory mode=770 owner=root group=admin recurse=yes
   tags: code
 
 - name: 'make cron jobs executable'
-  file: path={{cron_dir}} state=directory mode=0770 owner=root group=admin recurse=yes
+  file: path={{cron_dir}} state=directory mode=770 owner=root group=admin recurse=yes
   tags: code
 
 

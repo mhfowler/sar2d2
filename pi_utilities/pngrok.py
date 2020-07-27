@@ -29,7 +29,7 @@ if __name__ == '__main__':
   regex = '^tcp:\/\/(\d+\.tcp\.ngrok\.io)\:(\d+?)$'
   match = re.match(regex, public_url)
   if match:
-    ssh_string = 'ssh pi@{} -p{}'.format(match.group(1), match.group(2))
+    ssh_string = 'ssh swim@{} -p{}'.format(match.group(1), match.group(2))
     log_ip(ssh_string)
   else:
     log_ip(public_url)
