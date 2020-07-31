@@ -32,7 +32,7 @@
   tags: code
 
 - name: 'Deploy oasisvr.info from git'
-  git: repo=git@github.com:mhfowler/sar2d2.git dest=/srv/www/oasisvr.info remote=origin version=master accept_hostkey=yes force=yes
+  git: repo=git@github.com:mhfowler/oasis-vr.git dest=/srv/www/oasisvr.info remote=origin version=master accept_hostkey=yes force=yes
   tags: code
 
 - name: Install nginx site for specified site
@@ -199,6 +199,10 @@
     owner: root
     group: admin
     recurse: yes
+  tags: code
+
+- name: 'set  permissions for /srv'
+  command: chmod 770 /srv
   tags: code
 
 - name: 'set permissions for /greetingroom'

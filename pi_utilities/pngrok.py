@@ -1,8 +1,8 @@
 import time
 import re
 
-import pxssh
 from pyngrok import ngrok
+from pexpect import pxssh
 
 from pi_utilities.telegram_helper import telegram_log
 from hello_settings import SECRETS_DICT
@@ -39,12 +39,21 @@ def open_ngrok_tunnel():
 
 
 def test_ngrok_tunnel():
-  s = pxssh.pxssh()
   ssh_url = ''
   with open(ssh_file_path) as f:
     ssh_url = f.read()
   telegram_log('testing ssh connection: {}'.format(ssh_url))
-  if not s.login('localhost', 'swim', 'hello'):
+  print(ssh_url)
+  regex = 'ssh swim@(\S+) -p(\S+)'
+  match = re.match(regex, ssh_url)
+  if match:
+    host = match.group(1)
+    port = match.group(2)
+  else:
+    print('regex failed for ssh_url')
+    return False
+  s = pxssh.pxssh()
+  if not s.login(host, 'swim', 'hello', port=port):
     telegram_log('++ ssh via ngrok failed')
     return False
   else:
@@ -64,4 +73,3 @@ if __name__ == '__main__':
     else:
       open_ngrok_tunnel()
       time.sleep(10)
-
