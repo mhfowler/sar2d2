@@ -33,5 +33,34 @@ if [ -d /etc/profile.d ]; then
   unset i
 fi
 
-# aliases
 
+function mycd() {
+  A=$1
+  cd "$A"
+  if [[ -f "$PWD/.readme" ]]; then
+    cat $PWD/.readme
+  fi
+  if [[ -f "$PWD/.runme" ]]; then
+    $PWD/.runme
+  fi
+}
+
+function wherefun() {
+        WHERE=${PWD/\/home\/swim/\~}
+        echo "You are currently in "$WHERE
+}
+
+# aliases
+alias cd="mycd"
+alias guide="cat /home/swim/.guide.txt"
+alias map="tree /greetingroom -d";
+alias commands="cat /home/swim/.commands.txt"
+alias see="cat"
+alias back="cd .."
+alias move="mycd"
+alias look="ls"
+alias where="wherefun"
+alias intro="cd ~; cat /etc/motd; echo ""; cat /home/swim/.guide_prompt.txt"
+
+# print out prompt to type guide
+cat /home/swim/.guide_prompt.txt

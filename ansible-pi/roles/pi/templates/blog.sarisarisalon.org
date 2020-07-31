@@ -1,9 +1,9 @@
 server {
     listen 80;
-    server_name oasisvr.info;
+    server_name blog.sarisarisalon.org;
 
     location / {
-        root /srv/www/oasisvr.info;
+        root /srv/www/blog.sarisarisalon.org/;
         index index.html;
 
         try_files $uri $uri/ /index.html;

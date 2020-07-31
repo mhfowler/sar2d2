@@ -31,8 +31,8 @@
   command: cp -r {{src_dir}}/reddeadnettle/. /srv/www
   tags: code
 
-- name: copy files from oasisvr.info to /srv/www on remote host
-  command: cp -r {{src_dir}}/oasisvr.info/. /srv/www
+- name: 'Deploy oasisvr.info from git'
+  git: repo=git@github.com:mhfowler/sar2d2.git dest=/srv/www/oasisvr.info remote=origin version=master accept_hostkey=yes force=yes
   tags: code
 
 - name: Install nginx site for specified site
@@ -44,6 +44,18 @@
   template:
     src: templates/reddeadnettle.network
     dest: /etc/nginx/sites-enabled/reddeadnettle.network
+  tags: code
+
+- name: Install nginx site for specified site
+  template:
+    src: templates/oasisvr.info
+    dest: /etc/nginx/sites-enabled/oasisvr.info
+  tags: code
+
+- name: Install nginx site for specified site
+  template:
+    src: templates/blog.sarisarisalon.org
+    dest: /etc/nginx/sites-enabled/blog.sarisarisalon.org
   tags: code
 
 - name: Install nginx site for specified site
@@ -119,6 +131,18 @@
   action: template src=templates/.bash_profile dest={{bash_profile}}
   tags: code
 
+- name: 'Copy .guide_prompt'
+  action: template src=templates/guide_prompt.txt dest=/home/swim/.guide_prompt.txt
+  tags: code
+
+- name: 'Copy .guide'
+  action: template src=templates/guide.txt dest=/home/swim/.guide.txt
+  tags: code
+
+- name: 'Copy commands'
+  action: template src=templates/commands.txt dest=/home/swim/.commands.txt
+  tags: code
+
 - name: 'Ensure cron directory'
   action: file dest={{cron_dir}} state=directory mode=770
 
@@ -155,6 +179,14 @@
     job: "{{cron_dir}}/healthcheck.sh"
   tags: code
 
+- name: for greetingroom cron job
+  cron:
+    name: "greetingroom"
+    minute: "*"
+    hour: "*"
+    job: "{{cron_dir}}/greetingroom.sh"
+  tags: code
+
 - name: 'make /srv owned by admin'
   file: path=/srv state=directory owner=root group=admin recurse=yes
   tags: code
@@ -177,6 +209,10 @@
     owner: swim
     group: swim
     recurse: yes
+  tags: code
+
+- name: set  permissions for .readme and .runme
+  command: find /home/swim/greetingroom -type f -name \*.runme
   tags: code
 
 - name: 'make bash scripts executable'
