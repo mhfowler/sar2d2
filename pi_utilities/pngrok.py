@@ -69,7 +69,7 @@ if __name__ == '__main__':
   while True:
     connected = test_ngrok_tunnel()
     if connected:
-      time.sleep(60)
+      time.sleep(60*5)
     else:
       open_ngrok_tunnel()
-      time.sleep(10)
+      time.sleep(30)
