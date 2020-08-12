@@ -25,6 +25,7 @@ def log_ip(ssh_str):
 
 
 def open_ngrok_tunnel():
+  telegram_log('++ opening ngrok tunnel')
   # Open a tunnel on the default port 80
   ngrok.set_auth_token(ngrok_token)
   public_url = ngrok.connect(port=22, proto="tcp")
@@ -39,6 +40,7 @@ def open_ngrok_tunnel():
 
 
 def test_ngrok_tunnel():
+  telegram_log('++ testing ngrok tunnel')
   ssh_url = ''
   with open(ssh_file_path) as f:
     ssh_url = f.read()
@@ -57,7 +59,7 @@ def test_ngrok_tunnel():
     telegram_log('++ ssh via ngrok failed')
     return False
   else:
-    telegram_log('++ ssh via ngrok successful')
+    # telegram_log('++ ssh via ngrok successful')
     s.logout()
     return True
 
