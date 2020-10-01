@@ -33,12 +33,12 @@ fi
 
 # at this point we are connected to the internet, let's start sar2d2
 # node /srv/oasis/js/ngrok_tcp_connect.js  > /srv/log/ngrok.log 2> /srv/log/ngrok.error &
-$PYTHON /srv/oasis/sarpi/sar2d2.py > /srv/log/sar2d2.log 2> /srv/log/sar2d2.error &
+# $PYTHON /srv/oasis/sarpi/sar2d2.py > /srv/log/sar2d2.log 2> /srv/log/sar2d2.error &
 $PYTHON /srv/oasis/pi_utilities/pngrok.py > /srv/log/pngrok.log 2> /srv/log/pngrok.error &
 
 #python3 /srv/oasis/sarpi/servo_helper.py > /srv/log/servo_start.log 2> /srv/log/servo_start.error &
 
 # ssb
-# runuser -l pi -c '/srv/run-ssb-server.sh > /srv/log/ssb.log 2> /srv/log/ssb.error &'
+runuser -l pi -c '/srv/run-ssb-server.sh > /srv/log/ssb.log 2> /srv/log/ssb.error &'
 
 exit 0

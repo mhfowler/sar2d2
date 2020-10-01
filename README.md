@@ -28,3 +28,7 @@ ssh -Y pi@myfreehoroscope.today
 
 # encrypted hard-drive
 followed this guide for encrypting external USB hard-drive http://www.longsteve.com/wiki/index.php/USB_Hard_Drive_Encryption_on_a_Raspberry_Pi
+
+# to update wifi with sd card
+copy wpa_supplicant.conf to root of sd card
+also create a blank file named ssh on the root of sd card
