@@ -74,7 +74,7 @@ if __name__ == '__main__':
   number_of_consecutive_passed_tests = 0
   while True:
     # if we've already passed two tests in a row, then we don't need to log to telegram
-    debug_log = number_of_consecutive_passed_tests > 2
+    debug_log = number_of_consecutive_passed_tests < 2
     connected = test_ngrok_tunnel(debug_log=debug_log)
     if connected:
       number_of_consecutive_passed_tests += 1

@@ -205,6 +205,10 @@
   command: chmod 770 /srv
   tags: code
 
+- name: 'set  permissions for /srv/www/ssh.txt'
+  command: chmod 660 /srv/www/ssh.txt
+  tags: code
+
 - name: 'set permissions for /greetingroom'
   file:
     path: /home/swim/greetingroom
