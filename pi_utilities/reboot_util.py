@@ -77,7 +77,7 @@ def reboot_check():
             if minutes_to_next_reboot == 0:
                 next_val = 1
             else:
-                next_val = minute_to_next_reboot*2
+                next_val = minutes_to_next_reboot*2
             save_minutes_to_next_reboot(next_val)
             _log('++ sleeping {} minutes before reboot'.format(minutes_to_next_reboot))
             time.sleep(minutes_to_next_reboot*60)

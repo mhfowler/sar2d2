@@ -39,12 +39,13 @@ def open_ngrok_tunnel():
     log_ip(public_url)
 
 
-def test_ngrok_tunnel():
-  telegram_log('++ testing ngrok tunnel')
-  ssh_url = ''
+def test_ngrok_tunnel(debug_log=False):
+  if debug_log:
+    telegram_log('++ testing ngrok tunnel')
   with open(ssh_file_path) as f:
     ssh_url = f.read()
-  telegram_log('testing ssh connection: {}'.format(ssh_url))
+  if debug_log:
+    telegram_log('testing ssh connection: {}'.format(ssh_url))
   print(ssh_url)
   regex = 'ssh swim@(\S+) -p(\S+)'
   match = re.match(regex, ssh_url)
@@ -56,10 +57,12 @@ def test_ngrok_tunnel():
     return False
   s = pxssh.pxssh()
   if not s.login(host, 'swim', 'hello', port=port):
-    telegram_log('++ ssh via ngrok failed')
+    if debug_log:
+      telegram_log('++ ssh via ngrok failed')
     return False
   else:
-    # telegram_log('++ ssh via ngrok successful')
+    if debug_log:
+      telegram_log('++ ssh via ngrok successful')
     s.logout()
     return True
 
@@ -68,10 +71,16 @@ if __name__ == '__main__':
 
   open_ngrok_tunnel()
 
+  number_of_consecutive_passed_tests = 0
   while True:
-    connected = test_ngrok_tunnel()
+    # if we've already passed two tests in a row, then we don't need to log to telegram
+    debug_log = number_of_consecutive_passed_tests > 2
+    connected = test_ngrok_tunnel(debug_log=debug_log)
     if connected:
+      number_of_consecutive_passed_tests += 1
       time.sleep(60*5)
+    # if we failed the test than, re-open the tunnel and keep testing
     else:
+      number_of_consecutive_passed_tests = 0
       open_ngrok_tunnel()
       time.sleep(30)
