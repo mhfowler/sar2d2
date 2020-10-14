@@ -56,7 +56,7 @@ def test_ngrok_tunnel(debug_log=False):
     print('regex failed for ssh_url')
     return False
   s = pxssh.pxssh()
-  if not s.login(host, 'swim', 'hello', port=port):
+  if not s.login(host, 'swim', 'hello', port=port, sync_multiplier=5):
     if debug_log:
       telegram_log('++ ssh via ngrok failed')
     return False
