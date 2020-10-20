@@ -72,7 +72,7 @@
 
 - name: Install nginx site for specified site
   template:
-    src: templates/myfreehoroscope.today
+    src: templates/test.reddeadnettle.network
     dest: /etc/nginx/sites-enabled/test.reddeadnettle.network
   tags: code
 
