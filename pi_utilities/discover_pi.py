@@ -8,7 +8,7 @@ def discover_pi():
     # ips = subprocess.check_output("/usr/local/bin/nmap 172.20.10.2/24 -n -sP | grep report | awk '{print $5}'", shell=True)
     # ips = subprocess.check_output("/usr/local/bin/nmap 192.168.0.8/24 -n -sP | grep report | awk '{print $5}'", shell=True)
     # ips = subprocess.check_output("/usr/local/bin/nmap 192.168.0.8/24 -n -sP | grep report | awk '{print $5}'", shell=True)
-    ips = subprocess.check_output("/usr/local/bin/nmap 192.168.1.3/24 -n -sP | grep report | awk '{print $5}'", shell=True)
+    ips = subprocess.check_output("/usr/local/bin/nmap 192.168.1.5/24 -n -sP | grep report | awk '{print $5}'", shell=True)
     for ip_address in ips.split('\n'):
         print ip_address
         # try:

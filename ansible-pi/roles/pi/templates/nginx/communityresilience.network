@@ -8,12 +8,12 @@ add_header Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe
 #
 server {
     listen 443 ssl default deferred;
-    server_name {{ domain_name }};
+    server_name communityresilience.network;
 
     ssl on;
-    ssl_certificate         /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem;
-    ssl_certificate_key     /etc/letsencrypt/live/{{ domain_name }}/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem;
+    ssl_certificate         /etc/letsencrypt/live/communityresilience.network/fullchain.pem;
+    ssl_certificate_key     /etc/letsencrypt/live/communityresilience.network/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/communityresilience.network/fullchain.pem;
 
     ssl_session_cache shared:SSL:50m;
     ssl_session_timeout 5m;

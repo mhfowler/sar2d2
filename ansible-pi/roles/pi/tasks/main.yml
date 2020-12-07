@@ -1,6 +1,6 @@
 ---
-- name: 'Configure WIFI'
-  copy: src=secret_files/wpa_supplicant.conf dest=/etc/wpa_supplicant/wpa_supplicant.conf mode=0600
+#- name: 'Configure WIFI'
+#  copy: src=secret_files/wpa_supplicant.conf dest=/etc/wpa_supplicant/wpa_supplicant.conf mode=0600
 
 #- name: 'Update APT package cache'
 #  action: apt update_cache=yes
@@ -27,8 +27,11 @@
   git: repo={{repo_url}} dest={{src_dir}} remote={{repo_remote}} version={{repo_branch}} accept_hostkey=yes force=yes
   tags: code
 
-- name: copy files from reddeadnettle to /srv/www on remote host
-  command: cp -r {{src_dir}}/reddeadnettle/. /srv/www
+- name: 'Ensure /srv/www/communityresilience'
+  action: file dest={{log_dir}} state=directory mode=777
+
+- name: copy files from reddeadnettle to /srv/www/communityresilience on remote host
+  command: cp -r {{src_dir}}/reddeadnettle/. /srv/www/communityresilience
   tags: code
 
 - name: 'Deploy oasisvr.info from git'
@@ -37,42 +40,24 @@
 
 - name: Install nginx site for specified site
   template:
-    src: templates/localhost
+    src: templates/nginx/localhost
     dest: /etc/nginx/sites-enabled/localhost
 
 - name: Install nginx site for specified site
   template:
-    src: templates/reddeadnettle.network
+    src: templates/nginx/reddeadnettle.network
     dest: /etc/nginx/sites-enabled/reddeadnettle.network
   tags: code
 
 - name: Install nginx site for specified site
   template:
-    src: templates/oasisvr.info
+    src: templates/nginx/oasisvr.info
     dest: /etc/nginx/sites-enabled/oasisvr.info
   tags: code
 
 - name: Install nginx site for specified site
   template:
-    src: templates/blog.sarisarisalon.org
-    dest: /etc/nginx/sites-enabled/blog.sarisarisalon.org
-  tags: code
-
-- name: Install nginx site for specified site
-  template:
-    src: templates/localhost
-    dest: /etc/nginx/sites-enabled/localhost
-  tags: code
-
-
-- name: Install nginx site for specified site
-  template:
-    src: templates/myfreehoroscope.today
-    dest: /etc/nginx/sites-enabled/myfreehoroscope.today
-
-- name: Install nginx site for specified site
-  template:
-    src: templates/test.reddeadnettle.network
+    src: templates/nginx/test.reddeadnettle.network
     dest: /etc/nginx/sites-enabled/test.reddeadnettle.network
   tags: code
 
@@ -90,6 +75,10 @@
 
 - name: 'Copy secret.json file'
   copy: src=secret_files/secret.json dest={{src_dir}}/ansible-pi/secret_files/secret.json
+  tags: code
+
+- name: 'Copy run-ssb-server.sh'
+  action: template src=templates/ssb/run-ssb-server.sh dest=/srv/ssb/run-ssb-server.sh mode=770
   tags: code
 
 - name: 'Copy luks-keyfile'
@@ -139,15 +128,15 @@
   tags: code
 
 - name: 'Copy .guide_prompt'
-  action: template src=templates/guide_prompt.txt dest=/home/swim/.guide_prompt.txt
+  action: template src=templates/oasis/guide_prompt.txt dest=/home/swim/.guide_prompt.txt
   tags: code
 
 - name: 'Copy .guide'
-  action: template src=templates/guide.txt dest=/home/swim/.guide.txt
+  action: template src=templates/oasis/guide.txt dest=/home/swim/.guide.txt
   tags: code
 
 - name: 'Copy commands'
-  action: template src=templates/commands.txt dest=/home/swim/.commands.txt
+  action: template src=templates/oasis/commands.txt dest=/home/swim/.commands.txt
   tags: code
 
 - name: 'Ensure cron directory'
@@ -180,8 +169,8 @@
 - name: for health check
   cron:
     name: "health check"
-    minute: "*"
-    hour: "*/10"
+    minute: "*/10"
+    hour: "*"
     user: "pi"
     job: "{{cron_dir}}/healthcheck.sh"
   tags: code
